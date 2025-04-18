@@ -1,14 +1,18 @@
-def set_angle(angle):
-    duty = angle / 18 + 2
-    GPIO.output(18, True)
-    pwm.ChangeDutyCycle(duty)
-    time.sleep(1)
-    GPIO.output(18, False)
-    pwm.ChangeDutyCycle(0)
+import RPi.GPIO as GPIO
+import time
 
-# Move servo to 90 degrees
-set_angle(90)
+# Set up GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.OUT)
 
-# Clean up
-pwm.stop()
-GPIO.cleanup()
+# Blink LED
+try:
+    while True:
+        GPIO.output(17, GPIO.HIGH)
+        time.sleep(1)
+        GPIO.output(17, GPIO.LOW)
+        time.sleep(1)
+except KeyboardInterrupt:
+    pass
+finally:
+    GPIO.cleanup()
